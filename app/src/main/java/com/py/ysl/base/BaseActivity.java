@@ -2,6 +2,7 @@ package com.py.ysl.base;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.trello.rxlifecycle2.android.ActivityEvent;
 import com.trello.rxlifecycle2.components.RxActivity;
@@ -15,7 +16,32 @@ public class BaseActivity extends RxActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         lifeSubject.onNext(ActivityEvent.CREATE);
+        Log.e("234","BaseActivity");
     }
+
+    /**
+     * 绑定view
+     */
+    protected void bindView(){
+
+    }
+    /**
+     * 事件绑定
+     */
+    protected void eventBind(){
+
+    }
+
+    /**
+     * 加载数据
+     */
+    protected void initData(){
+
+    }
+
+
+
+
     @Override
     protected void onResume() {
         super.onResume();

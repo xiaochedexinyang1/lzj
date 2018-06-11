@@ -1,15 +1,20 @@
 package com.py.ysl.activity;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.lvfq.pickerview.TimePickerView;
 import com.py.ysl.R;
 import com.py.ysl.base.BaseActivity;
 import com.py.ysl.bean.BaseBean;
 import com.py.ysl.module.RetiofitModule;
+import com.py.ysl.utils.DialogUtils;
 
 import org.json.JSONObject;
 
@@ -23,7 +28,7 @@ import io.reactivex.disposables.Disposable;
 import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 
-public class RxjavaActivity extends BaseActivity {
+public class RxjavaActivity extends BaseActivity implements View.OnClickListener{
 
     @Bind(R.id.text)
     TextView textView;
@@ -31,11 +36,26 @@ public class RxjavaActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rxjava);
-        ButterKnife.bind(this);
+        ButterKnife.bind(RxjavaActivity.this);
+        eventBind();
+        initData();
                 getData();
-
+        Log.e("234","RxjavaActivity");
 
     }
+
+
+    @Override
+    protected void eventBind() {
+        super.eventBind();
+        textView.setOnClickListener(this);
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
+    }
+
     private void getData(){
         RetiofitModule module = new RetiofitModule(RxjavaActivity.this);
 //        module.getIP(new Observer() {
@@ -133,5 +153,22 @@ public class RxjavaActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.text:
+                DialogUtils.alertTimerPicker(RxjavaActivity.this, TimePickerView.Type.YEAR_MONTH_DAY,
+                        "yyyy-MM-dd", "选择日期", "确定", Gravity.CENTER,
+                        new DialogUtils.TimerPickerCallBack() {
+                            @Override
+                            public void onTimeSelect(String date) {
+                            }
+                        });
+                break;
+            default:
+                break;
+        }
     }
 }
