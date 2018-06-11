@@ -49,7 +49,7 @@ public class RxjavaActivity extends BaseActivity implements View.OnClickListener
         eventBind();
         initData();
         Log.e("234", "RxjavaActivity");
-
+        showProDlg();
     }
 
 

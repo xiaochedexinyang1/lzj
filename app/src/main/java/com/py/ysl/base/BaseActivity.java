@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.py.ysl.view.CustomProgress;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 import com.trello.rxlifecycle2.components.RxActivity;
 
@@ -11,6 +12,7 @@ import io.reactivex.subjects.BehaviorSubject;
 
 
 public class BaseActivity extends RxActivity {
+    public static CustomProgress proDlg;
     protected final BehaviorSubject<ActivityEvent> lifeSubject = BehaviorSubject.create();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +41,17 @@ public class BaseActivity extends RxActivity {
 
     }
 
+    protected void showProDlg() {
+        proDlg = CustomProgress.show(BaseActivity.this, "", true, null);
+    }
 
+    protected void cancelProDlg() {
+        if (proDlg != null) {
+            proDlg.setCancelable(true);
+            proDlg.dismiss();
+            proDlg = null;
+        }
+    }
 
 
     @Override
