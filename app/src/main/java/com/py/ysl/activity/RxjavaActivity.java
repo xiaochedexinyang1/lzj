@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -50,9 +51,12 @@ public class RxjavaActivity extends BaseActivity implements View.OnClickListener
         initData();
         Log.e("234", "RxjavaActivity");
         showProDlg();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+            }
+        },2000);
     }
-
-
     @Override
     protected void eventBind() {
         super.eventBind();
