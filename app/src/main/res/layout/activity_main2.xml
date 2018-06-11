@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <!--
+ app:tabGravity="center" 对齐方式，可选fill和center
+ app:tabIndicatorColor="@color/colorAccent" 设置tab下划线的颜色
+ app:tabMode="scrollable" scrollable是可以横行滚动,fixed是指固定个数
+ app:tabSelectedTextColor="@color/colorPrimaryDark" 选择tab的文本颜色
+ app:tabTextColor="@color/colorPrimary" 普通tab字体颜色
+ -->
+    <com.py.ysl.view.MyTabLayout
+        android:id="@+id/tl_news"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:tabGravity="center"
+        app:tabIndicatorColor="@color/blue_79ABFF"
+        app:tabMode="scrollable"
+        app:tabSelectedTextColor="@color/blue_79ABFF"
+        app:tabTextColor="@color/font_black"
+        />
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        android:overScrollMode="never"
+        android:layout_below="@+id/tl_news"
+        />
+</RelativeLayout>
