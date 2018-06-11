@@ -1,6 +1,16 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">理智菌</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Permission -->
+    <string name="permission_write_rationale">使用此功能需要打开存储权限</string>
+    <string name="permission_write_phone">使用此功能需要打开访问手机号权限</string>
+    <string name="permission_write_denied">你拒绝了权限，该功能不可用</string>
+    <string name="permission_write_never_ask">用户设置不再询问权限申请</string>
+    <string name="button_allow">允许</string>
+    <string name="button_deny">拒绝</string>
+    <string name="button_enter">确定</string>
+    <string name="button_cancel">取消</string>
 </resources>
