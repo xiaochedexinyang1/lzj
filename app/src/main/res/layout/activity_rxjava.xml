@@ -3,12 +3,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".activity.RxjavaActivity">
     <TextView
         android:id="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="测试"
+        android:text="测试权限"
+        android:textSize="15dp"
+        android:gravity="center"/>
+    <TextView
+        android:id="@+id/text1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="测试三级选择框"
+        android:textSize="15dp"
+        android:gravity="center"/>
+    <TextView
+        android:id="@+id/text2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="测试网络"
+        android:textSize="15dp"
         android:gravity="center"/>
 
 </LinearLayout>

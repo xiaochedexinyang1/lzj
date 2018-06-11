@@ -1,37 +1,46 @@
 package com.py.ysl.activity;
 
-import android.app.Activity;
-import android.app.Dialog;
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.lvfq.pickerview.TimePickerView;
 import com.py.ysl.R;
 import com.py.ysl.base.BaseActivity;
-import com.py.ysl.bean.BaseBean;
 import com.py.ysl.module.RetiofitModule;
+import com.py.ysl.utils.DefaultPermissionSetting;
+import com.py.ysl.utils.DefaultRationale;
 import com.py.ysl.utils.DialogUtils;
+import com.yanzhenjie.permission.Action;
+import com.yanzhenjie.permission.AndPermission;
 
-import org.json.JSONObject;
-
+import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
-import okhttp3.ResponseBody;
-import okhttp3.logging.HttpLoggingInterceptor;
 
-public class RxjavaActivity extends BaseActivity implements View.OnClickListener{
+public class RxjavaActivity extends BaseActivity implements View.OnClickListener {
 
     @Bind(R.id.text)
     TextView textView;
+    @Bind(R.id.text1)
+    TextView tvRxjava;
+    @Bind(R.id.text2)
+    TextView tvPerssion;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,8 +48,7 @@ public class RxjavaActivity extends BaseActivity implements View.OnClickListener
         ButterKnife.bind(RxjavaActivity.this);
         eventBind();
         initData();
-                getData();
-        Log.e("234","RxjavaActivity");
+        Log.e("234", "RxjavaActivity");
 
     }
 
@@ -49,6 +57,8 @@ public class RxjavaActivity extends BaseActivity implements View.OnClickListener
     protected void eventBind() {
         super.eventBind();
         textView.setOnClickListener(this);
+        tvRxjava.setOnClickListener(this);
+        tvPerssion.setOnClickListener(this);
     }
 
     @Override
@@ -56,7 +66,7 @@ public class RxjavaActivity extends BaseActivity implements View.OnClickListener
         super.initData();
     }
 
-    private void getData(){
+    private void getData() {
         RetiofitModule module = new RetiofitModule(RxjavaActivity.this);
 //        module.getIP(new Observer() {
 //            @Override
@@ -80,10 +90,10 @@ public class RxjavaActivity extends BaseActivity implements View.OnClickListener
 //            }
 //        });
 
-        Map<String,String> map = new HashMap<>();
-        map.put("customerId","KKLife");
-        map.put("deviceType","android");
-        map.put("pushDeviceToken","uojdslfjl");
+        Map<String, String> map = new HashMap<>();
+        map.put("customerId", "KKLife");
+        map.put("deviceType", "android");
+        map.put("pushDeviceToken", "uojdslfjl");
         module.umengPush(map, new Observer() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -147,8 +157,39 @@ public class RxjavaActivity extends BaseActivity implements View.OnClickListener
 //
 //            }
 //        });
+
+
+
+        File file = new File(Environment.getExternalStorageDirectory()+"lizhijun");
+        if (!file.exists()){
+            file.mkdir();
+        }
     }
 
+    /**
+     * 获取权限
+     */
+    private void requitPremission(){
+        AndPermission.with(RxjavaActivity.this).permission(Manifest.permission.READ_PHONE_STATE)
+                .rationale(new DefaultRationale())
+                .onGranted(new Action() {
+                    @Override
+                    public void onAction(List<String> permissions) {
+                        Log.e("234","有权限了");
+                        Toast.makeText(RxjavaActivity.this,"有权限了",Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .onDenied(new Action() {
+                    @Override
+                    public void onAction(List<String> permissions) {
+                        Log.e("234","没有权限");
+                        if (AndPermission.hasAlwaysDeniedPermission(RxjavaActivity.this, permissions)) {
+                            new DefaultPermissionSetting(RxjavaActivity.this)
+                                    .showSetting(permissions,getResources().getString(R.string.permission_write_phone));
+                        }
+                    }
+                }).start();
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -159,6 +200,16 @@ public class RxjavaActivity extends BaseActivity implements View.OnClickListener
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.text:
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    //没有权限去申请权限
+                    requitPremission();
+                }else {
+                    TelephonyManager tm = (TelephonyManager) RxjavaActivity.this.getSystemService(TELEPHONY_SERVICE);
+                    tm.getDeviceId();
+                }
+                break;
+            case R.id.text1:
                 DialogUtils.alertTimerPicker(RxjavaActivity.this, TimePickerView.Type.YEAR_MONTH_DAY,
                         "yyyy-MM-dd", "选择日期", "确定", Gravity.CENTER,
                         new DialogUtils.TimerPickerCallBack() {
@@ -166,6 +217,9 @@ public class RxjavaActivity extends BaseActivity implements View.OnClickListener
                             public void onTimeSelect(String date) {
                             }
                         });
+                break;
+            case R.id.text2:
+                getData();
                 break;
             default:
                 break;
