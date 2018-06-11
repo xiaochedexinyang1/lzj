@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -33,10 +34,13 @@ public class CustomProgress extends Dialog {
 
 		ImageView imageView = (ImageView) findViewById(R.id.spinnerImageView);
 //		// 获取ImageView上的动画背景
-		AnimationDrawable spinner = (AnimationDrawable) imageView.getBackground();
-		// 开始动画
-		spinner.start();
-
+//		AnimationDrawable spinner = (AnimationDrawable) imageView.getBackground();
+//		// 开始动画
+//		spinner.start();
+		Animation animation = AnimationUtils.loadAnimation(MyAppliciton.appContext,R.anim.process_bg);
+		LinearInterpolator interpolator = new LinearInterpolator();  //设置匀速旋转，在xml文件中设置会出现卡顿
+		animation.setInterpolator(interpolator);
+		imageView.startAnimation(animation);
 	}
 
 	/**

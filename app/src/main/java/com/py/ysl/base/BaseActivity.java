@@ -44,6 +44,12 @@ public class BaseActivity extends RxActivity {
     protected void showProDlg() {
         proDlg = CustomProgress.show(BaseActivity.this, "", true, null);
     }
+    protected void setMessageProDlg() {
+        if (proDlg != null && proDlg.isShowing() ) {
+            proDlg.setMessage("加载中...");
+        }
+
+    }
 
     protected void cancelProDlg() {
         if (proDlg != null) {
