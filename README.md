@@ -3,6 +3,6 @@
 ==
 以后功能会慢慢增加
 
-感谢
+感谢\<br>
 https://github.com/zhhr1122/z_comic_new\<br>
 https://github.com/iMeiji/Toutiao
