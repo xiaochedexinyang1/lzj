@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.py.ysl.R;
+import com.py.ysl.base.BaseActivity;
 import com.py.ysl.bean.BaseBean;
 import com.py.ysl.module.RetiofitModule;
 
@@ -22,7 +23,7 @@ import io.reactivex.disposables.Disposable;
 import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 
-public class RxjavaActivity extends Activity {
+public class RxjavaActivity extends BaseActivity {
 
     @Bind(R.id.text)
     TextView textView;
@@ -36,7 +37,7 @@ public class RxjavaActivity extends Activity {
 
     }
     private void getData(){
-        RetiofitModule module = new RetiofitModule();
+        RetiofitModule module = new RetiofitModule(RxjavaActivity.this);
 //        module.getIP(new Observer() {
 //            @Override
 //            public void onSubscribe(Disposable d) {
