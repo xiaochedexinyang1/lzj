@@ -162,12 +162,6 @@ public class RxjavaActivity extends BaseActivity implements View.OnClickListener
 //            }
 //        });
 
-
-
-        File file = new File(Environment.getExternalStorageDirectory()+"lizhijun");
-        if (!file.exists()){
-            file.mkdir();
-        }
     }
 
     /**

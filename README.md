@@ -5,7 +5,7 @@
 
 增加6.0以上权限测试<br>
 增加三级选择框<br>
-增加rxjava+okhttp3.0+retrofit 封装<br>
+增加rxjava+okhttp3.0+retrofit 封装 添加公共header  以及生命rxjava 周期管理<br>
 
 
 
