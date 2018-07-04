@@ -8,8 +8,14 @@
     <com.py.ysl.view.myview.MyView1
         android:id="@+id/my_view"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        custom:titleText="ddd"/>
+        android:layout_height="100dp"
+        android:paddingTop="40dp"
+        android:paddingBottom="1dp"
+        android:paddingLeft="150dp"
+        android:paddingRight="2dp"
+        custom:titleTextColor="#ff0000"
+        custom:titleTextSize="40sp"
+        custom:titleText="4566"/>
 
 
 </LinearLayout>

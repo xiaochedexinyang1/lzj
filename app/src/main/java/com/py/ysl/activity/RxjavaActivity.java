@@ -1,6 +1,7 @@
 package com.py.ysl.activity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.lvfq.pickerview.TimePickerView;
 import com.py.ysl.R;
+import com.py.ysl.activity.kt.KtActivity1;
 import com.py.ysl.base.BaseActivity;
 import com.py.ysl.module.RetiofitModule;
 import com.py.ysl.utils.DefaultPermissionSetting;
@@ -41,6 +43,8 @@ public class RxjavaActivity extends BaseActivity implements View.OnClickListener
     TextView tvRxjava;
     @Bind(R.id.text2)
     TextView tvPerssion;
+    @Bind(R.id.text3)
+    TextView text3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +67,7 @@ public class RxjavaActivity extends BaseActivity implements View.OnClickListener
         textView.setOnClickListener(this);
         tvRxjava.setOnClickListener(this);
         tvPerssion.setOnClickListener(this);
+        text3.setOnClickListener(this);
     }
 
     @Override
@@ -218,6 +223,9 @@ public class RxjavaActivity extends BaseActivity implements View.OnClickListener
                 break;
             case R.id.text2:
                 getData();
+                break;
+            case R.id.text3:
+                startActivity(new Intent(RxjavaActivity.this, KtActivity1.class));
                 break;
             default:
                 break;

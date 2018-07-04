@@ -28,5 +28,13 @@
         android:text="测试网络"
         android:textSize="15dp"
         android:gravity="center"/>
+    <TextView
+        android:id="@+id/text3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="测试自定义view"
+        android:textSize="15dp"
+        android:gravity="center"/>
 
 </LinearLayout>
