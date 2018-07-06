@@ -110,6 +110,7 @@ public class MyView1 extends View{
         mPaint.setColor(Color.YELLOW);
         canvas.drawRect(0, 0, getMeasuredWidth(), getMeasuredHeight(), mPaint);
 
+
         mPaint.setColor(mTitleTextColor);
         canvas.drawText(mTitleText, getWidth() / 2 - mBound.width() / 2, getHeight() / 2 + mBound.height() / 2, mPaint);
     }

@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
@@ -14,18 +13,19 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.lvfq.pickerview.TimePickerView;
 import com.py.ysl.R;
 import com.py.ysl.activity.kt.KtActivity1;
 import com.py.ysl.base.BaseActivity;
-import com.py.ysl.module.RetiofitModule;
+import com.py.ysl.bean.KKBaseBean;
+import com.py.ysl.retiofit.module.RetiofitModule;
 import com.py.ysl.utils.DefaultPermissionSetting;
 import com.py.ysl.utils.DefaultRationale;
 import com.py.ysl.utils.DialogUtils;
 import com.yanzhenjie.permission.Action;
 import com.yanzhenjie.permission.AndPermission;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -146,26 +146,26 @@ public class RxjavaActivity extends BaseActivity implements View.OnClickListener
 //            }
 //        });
 
-//        module.getCodeVesion("3", new Observer<BaseBean<Object>>() {
-//            @Override
-//            public void onSubscribe(Disposable d) {
-//            }
-//            @Override
-//            public void onNext(BaseBean<Object> userBean) {
-//                Gson gson = new Gson();
-//              String  object = gson.toJson(userBean);
-//                Log.e("234","userBean==="+object.toString());
-////                Log.e("234","userBean==="+userBean.getData().getList().get(0).getDownloadurl());
-//            }
-//            @Override
-//            public void onError(Throwable e) {
-//                Log.e("234","e==="+e.getMessage());
-//            }
-//            @Override
-//            public void onComplete() {
-//
-//            }
-//        });
+        module.getHomeInfo( new Observer<KKBaseBean<Object>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+            }
+            @Override
+            public void onNext(KKBaseBean<Object> userBean) {
+                Gson gson = new Gson();
+              String  object = gson.toJson(userBean);
+                Log.e("234","userBean==="+object.toString());
+//                Log.e("234","userBean==="+userBean.getData().getList().get(0).getDownloadurl());
+            }
+            @Override
+            public void onError(Throwable e) {
+                Log.e("234","e==="+e.getMessage());
+            }
+            @Override
+            public void onComplete() {
+
+            }
+        });
 
     }
 

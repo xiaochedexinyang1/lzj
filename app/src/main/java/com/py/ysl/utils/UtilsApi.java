@@ -3,6 +3,7 @@ package com.py.ysl.utils;
 
 
 import com.py.ysl.bean.BaseBean;
+import com.py.ysl.bean.KKBaseBean;
 import com.py.ysl.bean.UpdataVerCode;
 import com.py.ysl.bean.UserBean;
 
@@ -48,4 +49,6 @@ public interface UtilsApi {
     Observable<Object> umengPush(
             @QueryMap Map<String,String> map
     );
+    @GET("http://d.kkcredit.cn/rn/v2.0/home.json")
+    Observable<KKBaseBean<Object>> getHomeInfo();
 }

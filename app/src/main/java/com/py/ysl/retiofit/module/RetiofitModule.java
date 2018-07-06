@@ -1,4 +1,4 @@
-package com.py.ysl.module;
+package com.py.ysl.retiofit.module;
 
 import android.app.Activity;
 
@@ -12,6 +12,8 @@ import java.util.Map;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+
+
 
 public class RetiofitModule {
     private RxActivity rxAppActivity;
@@ -49,6 +51,13 @@ public class RetiofitModule {
     }
     public void umengPush(Map<String,String> map,Observer observer) {
         RetrofitFactory.getRetrofit().create(UtilsApi.class).umengPush(map)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .compose(rxAppActivity.bindUntilEvent(ActivityEvent.DESTROY))//在activity销毁时取消订阅
+                .subscribe(observer);
+    }
+    public void getHomeInfo(Observer observer){
+        RetrofitFactory.getRetrofit().create(UtilsApi.class).getHomeInfo()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .compose(rxAppActivity.bindUntilEvent(ActivityEvent.DESTROY))//在activity销毁时取消订阅
