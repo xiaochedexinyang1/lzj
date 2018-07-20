@@ -1,17 +1,13 @@
 package com.py.ysl.view.myview;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.View;
 
-import com.py.ysl.R;
 import com.py.ysl.bean.RoundInfo;
 
 import java.util.ArrayList;
@@ -97,8 +93,8 @@ public class RoundView extends View{
             mPaint.setStyle(Paint.Style.STROKE);// 设置中空的样式
             mPaint.setFlags(Paint.ANTI_ALIAS_FLAG);// 帮助消除锯齿
             mPaint.setStrokeWidth(dip2px(context,DEFAULT_GRENN_WIDTH));
-            mRectF.set(getWidth()/4 - circleCenterWith, getHeight()/4 - circleCenterWith,
-                getWidth()/4 + circleCenterWith, getHeight()/4 + circleCenterWith);
+            mRectF.set(getWidth()/4 - circleCenterWith, getHeight()/2 - circleCenterWith,
+                getWidth()/4 + circleCenterWith, getHeight()/2 + circleCenterWith);
 
         canvas.drawArc(mRectF, startAngle-0.5f, sweepAngle+0.5f, false, mPaint);
         }
