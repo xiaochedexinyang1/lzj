@@ -16,8 +16,13 @@ android {
         javaCompileOptions.annotationProcessorOptions.includeCompileClasspath = true
     }
     buildTypes {
+        debug {
+            minifyEnabled false
+            zipAlignEnabled true
+        }
         release {
             minifyEnabled false
+            zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

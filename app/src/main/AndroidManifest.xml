@@ -31,6 +31,7 @@
         <activity android:name=".base.BaseFragmentActivity" />
         <activity android:name=".activity.Main2Activity">
         </activity>
+        <activity android:name=".activity.ViewTestActivity"/>
         <activity android:name="com.py.ysl.activity.kt.KtActivity1" />
     </application>
 

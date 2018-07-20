@@ -54,7 +54,7 @@ public class RxjavaActivity extends BaseActivity implements View.OnClickListener
         eventBind();
         initData();
         Log.e("234", "RxjavaActivity");
-        showProDlg();
+//        showProDlg();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -225,7 +225,8 @@ public class RxjavaActivity extends BaseActivity implements View.OnClickListener
                 getData();
                 break;
             case R.id.text3:
-                startActivity(new Intent(RxjavaActivity.this, KtActivity1.class));
+//                startActivity(new Intent(RxjavaActivity.this, KtActivity1.class));ViewTestActivity
+                startActivity(new Intent(RxjavaActivity.this, ViewTestActivity.class));
                 break;
             default:
                 break;
