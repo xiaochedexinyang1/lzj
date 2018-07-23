@@ -30,7 +30,15 @@
     <com.py.ysl.view.myview.RoundView
         android:id="@+id/cicyle"
         android:layout_width="match_parent"
-        android:layout_height="300dp" />
+        android:layout_height="300dp"
+        custom:roundTextColor="#55000000"
+        custom:roundTextSize="12sp"/>
+    <TextView
+        android:id="@+id/text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="测试"/>
 
 
 </LinearLayout>

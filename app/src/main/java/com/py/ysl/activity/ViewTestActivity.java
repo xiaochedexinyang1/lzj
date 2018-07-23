@@ -1,6 +1,8 @@
 package com.py.ysl.activity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import com.py.ysl.R;
 import com.py.ysl.base.BaseActivity;
@@ -23,6 +25,8 @@ public class ViewTestActivity extends BaseActivity{
     BarGraphView bar_view;
     @Bind(R.id.cicyle)
     RoundView roundView;
+    @Bind(R.id.text1)
+    TextView text1;
     private List<String>list;
     private List<RoundInfo>roundList;
     @Override
@@ -53,12 +57,12 @@ public class ViewTestActivity extends BaseActivity{
         info3.setColor("#5f98fe");
 
         RoundInfo info4 = new RoundInfo();
-        info4.setCount("50");
+        info4.setCount("10");
         info4.setName("桑拿");
         info4.setColor("#fe7614");
 
         RoundInfo info5 = new RoundInfo();
-        info5.setCount("150");
+        info5.setCount("115");
         info5.setName("淘宝");
         info5.setColor("#a488fe");
 
@@ -81,6 +85,12 @@ public class ViewTestActivity extends BaseActivity{
 
         bar_view.setData(list);
         roundView.setData(roundList);
+        text1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                roundView.setData(roundList);
+            }
+        });
     }
 
     @Override

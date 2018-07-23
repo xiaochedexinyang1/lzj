@@ -1,6 +1,7 @@
 package com.py.ysl.utils;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.TypedValue;
 
 /**
@@ -30,5 +31,20 @@ public class DensityUtil {
 	}
 	public static int dpToPx(int dp, Context context) {
 		return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics());
+	}
+	/**
+	 * 保留两位小数
+	 * @param minAmount
+	 * @return
+	 */
+	public static String decFormatOfTwoPoint(String minAmount){
+
+		if (TextUtils.isEmpty(minAmount)){
+			minAmount =  String.format("%.2f", Double.parseDouble("0"));
+		}else {
+			minAmount =  String.format("%.2f", Double.parseDouble(minAmount));
+		}
+
+		return minAmount;
 	}
 }
