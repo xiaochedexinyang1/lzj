@@ -9,6 +9,7 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.view.View;
 import com.py.ysl.R;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -88,6 +90,7 @@ public class BarGraphView extends View{
 
     public void setData(List<String>listData){
         this.listData = listData;
+        getShowMonth();
     }
 
     /**
@@ -126,7 +129,7 @@ public class BarGraphView extends View{
     private void initData(){
         points = new ArrayList<>();
        int  lineStartplace = getWidth() / 12;
-       int []po ={150,200,250,170,150,280};
+       int []po ={150,200,250,170,150,280,150,200,250,170,150,280};
         for (int i=0;i<listData.size();i++){
             Point point = new Point(lineStartplace,po[i]);
             points.add(point);
@@ -162,10 +165,10 @@ public class BarGraphView extends View{
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
         mHeight = getHeight();
-        mSize = getWidth() / listData.size();
-        mChartWidth = getWidth() / listData.size() ;
+        mSize = getWidth() / listData.size()*2;
+        mChartWidth = getWidth() / listData.size()*2 ;
         textStartplace = getWidth() / listData.size()*2;
-        textWidth= getWidth() / listData.size() ;
+        textWidth= getWidth() / listData.size()*2 ;
         lineStartPlace = 0;
         initData();
     }
@@ -176,7 +179,7 @@ public class BarGraphView extends View{
         mPaint.setColor(xyColor);
         canvas.drawRect(0, 0, getMeasuredWidth(), mHeight/3*2, mbackgroundPaint);
         //画柱状图
-        int sizeCount = listData.size()/2;
+        int sizeCount = listData.size()/4;
         //划柱形
         for (int i = 0; i < sizeCount; i++) {
             mChartPaint.setStyle(Paint.Style.FILL);
@@ -198,10 +201,11 @@ public class BarGraphView extends View{
         mPaint.setTextAlign(Paint.Align.CENTER);
         mPaint.setColor(textColor);//要写在draw里面不然画不出来
         //划地下月份
-        for (int i=0;i<sizeCount*2;i++){
+        for (int i=0;i<sizeCount*4;i++){
+            Point startPoint = points.get(i);
             String text =String.valueOf(i + 1)+"月";
             mPaint.getTextBounds(text,0,text.length(),mBound);
-            canvas.drawText(text,textStartplace , mHeight/3*2+ mBound.height()+10,mPaint);
+            canvas.drawText(text,startPoint.x , mHeight/3*2+ mBound.height()+10,mPaint);
             textStartplace+= textWidth;
 
         }
@@ -211,13 +215,13 @@ public class BarGraphView extends View{
         dotPain.setColor(Color.parseColor("#ffffff"));
         dotPain.setAntiAlias(true);
         //划折线
-        for (int i=0;i<sizeCount*2-1;i++){
+        for (int i=0;i<sizeCount*4-1;i++){
             Point startPoint = points.get(i);
             Point endPoint = points.get(i+1);
             canvas.drawLine(startPoint.x,startPoint.y,endPoint.x,endPoint.y,lineapaint);
         }
         //划圆点
-        for (int i=0;i<sizeCount*2;i++){
+        for (int i=0;i<sizeCount*4;i++){
             Point startPoint = points.get(i);
             canvas.drawCircle(startPoint.x,startPoint.y,10,dotPain);
         }
@@ -232,9 +236,9 @@ public class BarGraphView extends View{
         super.onWindowVisibilityChanged(visibility);
         if (visibility == VISIBLE) {
             mSize = getWidth() / listData.size();
-            mChartWidth = getWidth() / listData.size();
+            mChartWidth = getWidth() / listData.size()*2;
             textStartplace = getWidth() / listData.size()*2;
-            textWidth= getWidth() / listData.size() ;
+            textWidth= getWidth() / listData.size()*2 ;
             lineStartPlace = 0;
         }
     }
@@ -247,26 +251,34 @@ public class BarGraphView extends View{
         int top = 0;
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                for (int i = 0; i < 6; i++) {
-//                    rect = new Rect(left, top, right, bottom);
-//                    left += mWidth / 12;
-//                    right += mWidth / 12;
-//                    if (rect.contains(x, y)) {
-//                        listener.getNumber(i, x, y);
-//                        number = i;
-//                        selectIndex = i;
-//                        selectIndexRoles.clear();
-//                        ;
-//                        selectIndexRoles.add(selectIndex * 2 + 1);
-//                        selectIndexRoles.add(selectIndex * 2);
-//                        invalidate();
-//                    }
-                }
+
                 break;
             case MotionEvent.ACTION_UP:
 
                 break;
         }
         return true;
+    }
+
+    private List<Integer> getShowMonth(){
+        if (listData==null )
+            return null;
+
+        List<Integer>monthList = new ArrayList<>();
+        //本月七月返回的是六月
+        Calendar calendar = Calendar.getInstance();
+//        int month = calendar.get(Calendar.MONTH);
+        int month = 1;
+        for (int i=listData.size();i>0;i--){
+            if (i<=month){
+                if (monthList.size()<6){
+                    monthList.add(i);
+                }
+
+            }
+
+        }
+        Log.e("234","monthList==="+monthList.toString());
+    return monthList;
     }
 }

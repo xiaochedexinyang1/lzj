@@ -30,20 +30,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
 public class RxjavaActivity extends BaseActivity implements View.OnClickListener {
 
-    @Bind(R.id.text)
+    @BindView(R.id.text)
     TextView textView;
-    @Bind(R.id.text1)
+    @BindView(R.id.text1)
     TextView tvRxjava;
-    @Bind(R.id.text2)
+    @BindView(R.id.text2)
     TextView tvPerssion;
-    @Bind(R.id.text3)
+    @BindView(R.id.text3)
     TextView text3;
 
     @Override
@@ -196,7 +196,7 @@ public class RxjavaActivity extends BaseActivity implements View.OnClickListener
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
+
     }
 
     @Override

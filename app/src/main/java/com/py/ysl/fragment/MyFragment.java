@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.py.ysl.R;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
  */
 public class MyFragment extends Fragment {
 
-@Bind(R.id.text)
+@BindView(R.id.text)
 TextView textView;
 
     @Override

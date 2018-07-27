@@ -14,13 +14,13 @@ import com.py.ysl.view.MyTabLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class Main2Activity extends FragmentActivity {
-    @Bind(R.id.tl_news)
+    @BindView(R.id.tl_news)
     MyTabLayout tabLayout;
-    @Bind(R.id.vp)
+    @BindView(R.id.vp)
     ViewPager viewPager;
 
     private List<String>mList;

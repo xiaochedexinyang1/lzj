@@ -13,7 +13,7 @@ import com.py.ysl.view.myview.RoundView;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -21,11 +21,11 @@ import butterknife.ButterKnife;
  * 自定义view测试
  */
 public class ViewTestActivity extends BaseActivity{
-    @Bind(R.id.bar_view)
+    @BindView(R.id.bar_view)
     BarGraphView bar_view;
-    @Bind(R.id.cicyle)
+    @BindView(R.id.cicyle)
     RoundView roundView;
-    @Bind(R.id.text1)
+    @BindView(R.id.text1)
     TextView text1;
     private List<String>list;
     private List<RoundInfo>roundList;
@@ -36,6 +36,12 @@ public class ViewTestActivity extends BaseActivity{
         ButterKnife.bind(ViewTestActivity.this);
         list = new ArrayList<>();
         roundList= new ArrayList<>();
+        list.add("2500");
+        list.add("6500");
+        list.add("500");
+        list.add("900");
+        list.add("2597");
+        list.add("2888");
         list.add("2500");
         list.add("6500");
         list.add("500");
@@ -96,6 +102,6 @@ public class ViewTestActivity extends BaseActivity{
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
+
     }
 }
