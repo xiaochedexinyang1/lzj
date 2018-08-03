@@ -198,7 +198,7 @@ public class ChartView extends View {
     protected void onDraw(Canvas canvas) {
 //        super.onDraw(canvas);
         canvas.drawColor(bgcolor);
-        drawXY(canvas);
+//        drawXY(canvas);
         drawBrokenLineAndPoint(canvas);
     }
 
@@ -315,66 +315,6 @@ public class ChartView extends View {
         canvas.drawPath(path, linePaint);
     }
 
-    /**
-     * 绘制XY坐标
-     *
-     * @param canvas
-     */
-    private void drawXY(Canvas canvas) {
-        int length = dpToPx(4);//刻度的长度
-        //绘制Y坐标
-        canvas.drawLine(xOri - xylinewidth / 2, 0, xOri - xylinewidth / 2, yOri, xyPaint);
-        //绘制y轴箭头
-        xyPaint.setStyle(Paint.Style.STROKE);
-        Path path = new Path();
-        path.moveTo(xOri - xylinewidth / 2 - dpToPx(5), dpToPx(12));
-        path.lineTo(xOri - xylinewidth / 2, xylinewidth / 2);
-        path.lineTo(xOri - xylinewidth / 2 + dpToPx(5), dpToPx(12));
-        canvas.drawPath(path, xyPaint);
-        //绘制y轴刻度
-        int yLength = (int) (yOri * (1 - 0.1f) / (yValue.size() - 1));//y轴上面空出10%,计算出y轴刻度间距
-        for (int i = 0; i < yValue.size(); i++) {
-            //绘制Y轴刻度
-            canvas.drawLine(xOri, yOri - yLength * i + xylinewidth / 2, xOri + length, yOri - yLength * i + xylinewidth / 2, xyPaint);
-            xyTextPaint.setColor(xytextcolor);
-            //绘制Y轴文本
-            String text = yValue.get(i) + "";
-            Rect rect = getTextBounds(text, xyTextPaint);
-            canvas.drawText(text, 0, text.length(), xOri - xylinewidth - dpToPx(2) - rect.width(), yOri - yLength * i + rect.height() / 2, xyTextPaint);
-        }
-        //绘制X轴坐标
-        canvas.drawLine(xOri, yOri + xylinewidth / 2, width, yOri + xylinewidth / 2, xyPaint);
-        //绘制x轴箭头
-        xyPaint.setStyle(Paint.Style.STROKE);
-        path = new Path();
-        //整个X轴的长度
-        float xLength = xInit + interval * (xValue.size() - 1) + (width - xOri) * 0.1f;
-        if (xLength < width)
-            xLength = width;
-        path.moveTo(xLength - dpToPx(12), yOri + xylinewidth / 2 - dpToPx(5));
-        path.lineTo(xLength - xylinewidth / 2, yOri + xylinewidth / 2);
-        path.lineTo(xLength - dpToPx(12), yOri + xylinewidth / 2 + dpToPx(5));
-        canvas.drawPath(path, xyPaint);
-        //绘制x轴刻度
-        for (int i = 0; i < xValue.size(); i++) {
-            float x = xInit + interval * i;
-            if (x >= xOri) {//只绘制从原点开始的区域
-                xyTextPaint.setColor(xytextcolor);
-                canvas.drawLine(x, yOri, x, yOri - length, xyPaint);
-                //绘制X轴文本
-                String text = xValue.get(i);
-                Rect rect = getTextBounds(text, xyTextPaint);
-                if (i == selectIndex - 1) {
-                    xyTextPaint.setColor(linecolor);
-                    canvas.drawText(text, 0, text.length(), x - rect.width() / 2, yOri + xylinewidth + dpToPx(2) + rect.height(), xyTextPaint);
-//                    canvas.drawRoundRect(x - xValueRect.width() / 2 - dpToPx(3), yOri + xylinewidth + dpToPx(1), x + xValueRect.width() / 2 + dpToPx(3)
-// , yOri + xylinewidth + dpToPx(2) + xValueRect.height() + dpToPx(2), dpToPx(2), dpToPx(2), xyTextPaint);//lizhijun
-                } else {
-                    canvas.drawText(text, 0, text.length(), x - rect.width() / 2, yOri + xylinewidth + dpToPx(2) + rect.height(), xyTextPaint);
-                }
-            }
-        }
-    }
 
     private float startX;
 

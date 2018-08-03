@@ -184,5 +184,9 @@
     <color name="supermarket_gray">#999999</color>
     <color name="gray_e6e6e6">#e6e6e6</color>
     <color name="gray_bfbfbf">#bfbfbf</color>
+    <color name="color_77b0ff">#77B0FF</color>
+    <color name="color_7c98ff">#7c98ff</color>
+    <color name="color_7C98FF">#007C98FF</color>
+    <color name="color_4E7FE0">#994E7FE0</color>
 
 </resources>

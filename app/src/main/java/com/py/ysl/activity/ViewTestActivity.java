@@ -8,10 +8,13 @@ import com.py.ysl.R;
 import com.py.ysl.base.BaseActivity;
 import com.py.ysl.bean.RoundInfo;
 import com.py.ysl.view.myview.BarGraphView;
+import com.py.ysl.view.myview.ChartView;
 import com.py.ysl.view.myview.RoundView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,6 +30,10 @@ public class ViewTestActivity extends BaseActivity{
     RoundView roundView;
     @BindView(R.id.text1)
     TextView text1;
+    @BindView(R.id.chartview)
+    ChartView chartview;
+
+
     private List<String>list;
     private List<RoundInfo>roundList;
     @Override
@@ -89,7 +96,6 @@ public class ViewTestActivity extends BaseActivity{
 //        list.add("1500");
 //        list.add("2500");
 
-        bar_view.setData(list);
         roundView.setData(roundList);
         text1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,6 +103,32 @@ public class ViewTestActivity extends BaseActivity{
                 roundView.setData(roundList);
             }
         });
+        List<String>StrList = new ArrayList<>();
+        List<Integer>intList = new ArrayList<>();
+        //折线对应的数据
+         Map<String, Integer> value = new HashMap<>();
+        for (int i = 0; i < 12; i++) {
+            StrList.add((i + 1) + "月");
+        }
+        value.put( "1月", 200);//60--240
+        value.put( "2月", 250);//60--240
+        value.put( "3月", 180);//60--240
+        value.put( "4月", 190);//60--240
+        value.put( "5月", 204);//60--240
+        value.put( "6月", 190);//60--240
+        value.put( "7月", 200);//60--240
+        value.put( "8月", 230);//60--240
+        value.put( "9月", 210);//60--240
+        value.put( "10月", 240);//60--240
+        value.put( "11月", 260);//60--240
+        value.put( "12月", 200);//60--240 value.put( "1月", 200);//60--240
+
+        for (int i = 0; i < 6; i++) {
+            intList.add(i * 60);
+        }
+        chartview.setValue(value,StrList,intList);
+        bar_view.setValue(value,StrList,intList);
+
     }
 
     @Override

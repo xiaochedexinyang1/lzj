@@ -17,21 +17,20 @@
         custom:titleTextSize="40sp"
         android:visibility="gone"
         custom:titleText="4566"/>
-<HorizontalScrollView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
     <com.py.ysl.view.myview.BarGraphView
         android:id="@+id/bar_view"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="250dp"
         custom:bargrapColor="#22ffffff"
         custom:textSize="14sp"
         android:visibility="visible"
         custom:textColor="#79ABFF"
         />
-
-</HorizontalScrollView>
-
+    <com.py.ysl.view.myview.ChartView
+        android:id="@+id/chartview"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="300dp" />
     <com.py.ysl.view.myview.RoundView
         android:id="@+id/cicyle"
         android:layout_width="match_parent"
