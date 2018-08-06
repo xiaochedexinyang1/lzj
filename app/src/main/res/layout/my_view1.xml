@@ -23,8 +23,19 @@
         android:layout_height="250dp"
         custom:bargrapColor="#22ffffff"
         custom:textSize="14sp"
-        android:visibility="visible"
+        android:visibility="gone"
         custom:textColor="#79ABFF"
+        />
+    <com.py.ysl.view.myview.MonthView
+        android:id="@+id/month"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        custom:monthtextSize="12sp"
+        custom:monthtextColor="#498dff"
+        custom:tktextSize="15sp"
+        custom:tktextColor="@color/blue_79ABFF"
+        custom:rectfColor="#4dffffff"
+        custom:rectfChoseColor="#ccffffff"
         />
     <com.py.ysl.view.myview.ChartView
         android:id="@+id/chartview"
@@ -42,7 +53,6 @@
         android:id="@+id/text1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:text="测试"/>
 
 

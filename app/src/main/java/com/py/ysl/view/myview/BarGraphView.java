@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author lizhijun 2018.7.19
+ * @author lizhijun 2018.8.1
  * 自定义柱状图
  */
 public class BarGraphView extends View{
@@ -75,9 +75,19 @@ public class BarGraphView extends View{
     //x轴坐标对应的数据
     private List<String> xValue = new ArrayList<>();
     //y轴坐标对应的数据
-    private List<Integer> yValue = new ArrayList<>();
+    private int yValue =0;
     //折线对应的数据
     private Map<String, Integer> value = new HashMap<>();
+
+    private int posMonth = 12;//当前月份，今年若超过当前月份的则不画
+    private int posPlace = 0;//一开始的位移 用于显示到最新的月份
+
+
+    private boolean isMonthFirst = false;//用于位移时是否第一次改变数据
+    private boolean isRectFirst = false;
+    private boolean ischangeFirst = true;//防止onlayout两次改变数据
+    private int valueSize = 12;//正常分割为12份
+
     //速度检测器
     private VelocityTracker velocityTracker;
 
@@ -189,20 +199,23 @@ public class BarGraphView extends View{
     //计算高度宽度
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        mHeight = getHeight();
-        mSize = getWidth() / value.size()*2;
-        mChartWidth = getWidth() / value.size()*2 ;
-        textStartplace = getWidth() / value.size()*2;
-        textWidth= getWidth() / value.size()*2 ;
-        linearStartX = mSize/2;
-        xOri = 0;
-        yOri = getHeight();
-        minXInit = getWidth()  - mSize * (xValue.size() - 1)-mSize/2;//计算最小的长度
-        minZxInit = getWidth() -  mSize * (xValue.size());
-        maxXInit = linearStartX;
-        zhuStartX = 0;
-        maxZxInit =mSize;
-        initData();
+        if (ischangeFirst) {
+            ischangeFirst =false;
+            mHeight = getHeight();
+            mSize = getWidth() /valueSize * 2;
+            mChartWidth = getWidth() / valueSize * 2;
+            textStartplace = getWidth() / valueSize * 2;
+            textWidth = getWidth() / valueSize * 2;
+            linearStartX = mSize / 2;
+            xOri = 0;
+            yOri = getHeight()/3*2;
+            minXInit = getWidth() - mSize * (valueSize - 1) - mSize / 2;//计算最小的长度
+            minZxInit = getWidth() - mSize * (valueSize);
+            maxXInit = linearStartX;
+            zhuStartX = 0;
+            maxZxInit = mSize;
+            initData();
+        }
         super.onLayout(changed, left, top, right, bottom);
     }
     @Override
@@ -219,14 +232,19 @@ public class BarGraphView extends View{
        drawMonth(canvas);
        //画折线图和圆点
         drawLine(canvas);
+        Log.e("234","linearStartX===="+linearStartX);
     }
 
     //划柱形Rect
     private void drawRect(Canvas canvas){
-        if (value.size()==0)
+        if (value==null||xValue==null||value.size()==0||xValue.size()==0)
             return;
         int sizeCount = value.size();
         //新建图层
+        if (isRectFirst) {
+            isRectFirst = false;
+            zhuStartX = zhuStartX - mSize * posPlace;
+        }
         int layerId = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
         for (int i = 0; i < sizeCount; i++) {
             mChartPaint.setStyle(Paint.Style.FILL);
@@ -248,17 +266,27 @@ public class BarGraphView extends View{
     }
     //划地下月份
     private void drawMonth(Canvas canvas){
-        if (value.size()==0)
+        if (value==null||xValue==null||value.size()==0||xValue.size()==0)
             return;
         mPaint.setTextSize(textSize);
         mPaint.setTextAlign(Paint.Align.CENTER);
-        mPaint.setColor(textColor);//要写在draw里面不然画不出来
         int sizeCount = value.size();
+        if (isMonthFirst) {
+            isMonthFirst = false;
+            linearStartX = linearStartX - mSize * posPlace;
+        }
         for (int i=0;i<sizeCount;i++){
             float   tx = linearStartX + (mSize) * i;
             String text =String.valueOf(i + 1)+"月";
             mPaint.getTextBounds(text,0,text.length(),mBound);
-            canvas.drawText(text,tx , mHeight/3*2+ mBound.height()+10,mPaint);
+            if (i+1 <= posMonth){
+                mPaint.setColor(textColor);//要写在draw里面不然画不出来
+                canvas.drawText(text,tx , mHeight/3*2+ mBound.height()+10,mPaint);
+            }else {
+                mPaint.setColor(context.getResources().getColor(R.color.color_498DFF));//要写在draw里面不然画不出来
+                canvas.drawText(text,tx , mHeight/3*2+ mBound.height()+10,mPaint);
+            }
+
             textStartplace+= textWidth;
         }
     }
@@ -268,7 +296,7 @@ public class BarGraphView extends View{
      * @param canvas
      */
     private void drawLine(Canvas canvas){
-        if (value.size()==0)
+        if (value==null||xValue==null||value.size()==0||xValue.size()==0)
             return;
         int sizeCount = value.size();
         lineapaint.setColor(Color.parseColor("#ffffff"));
@@ -281,36 +309,53 @@ public class BarGraphView extends View{
         Path path = new Path();
         Path bcpath = new Path();
         float x = linearStartX + (mSize) * 0;
-        float y = yOri - yOri * (1 - 0.1f) * value.get(xValue.get(0)) / yValue.get(yValue.size() - 1);
+        float y = yOri - yOri * value.get(xValue.get(0)) / yValue;
         path.moveTo(x,y);
         bcpath.moveTo(x,mHeight/3*2);
         bcpath.lineTo(x,y);
         LinearGradient bgGradient = new LinearGradient(0,y,0,mHeight/3*2,
                 context.getResources().getColor(R.color.color_4E7FE0),
                 context.getResources().getColor(R.color.color_7C98FF),Shader.TileMode.CLAMP);
+        int count=0;//记录第几月份好用于计算出x的值
+        boolean isSub = false;
         for (int i=1;i<sizeCount;i++){
-            y = yOri - yOri * (1 - 0.1f) * value.get(xValue.get(i)) / yValue.get(yValue.size() - 1);
+            y = yOri - yOri  * value.get(xValue.get(i)) / yValue;
             x = linearStartX + (mSize) * i;
-            path.lineTo(x,y);
-            bcpath.lineTo(x,y);
+            if (i+1<=posMonth) {
+                path.lineTo(x, y);
+                bcpath.lineTo(x, y);
+                count = i;
+                isSub= true;
+            }else
+                break;
         }
-        bcpath.lineTo(x,mHeight/3*2);
+        if (isSub){
+                x = linearStartX + (mSize) * count;
+                bcpath.lineTo(x, mHeight / 3 * 2);
+        }else {
+            bcpath.lineTo(x,mHeight/3*2);
+        }
         bcpath.close();
-        canvas.drawPath(path,lineapaint);
-
-        zxbPaint.setShader(bgGradient);
-        zxbPaint.setStrokeWidth(dpToPx(3));
-        canvas.drawPath(bcpath,zxbPaint);
+        canvas.drawPath(path, lineapaint);
+          if (count!=0) {//只有一个点则不需要画折线阴影背景
+               zxbPaint.setShader(bgGradient);
+               zxbPaint.setStrokeWidth(dpToPx(3));
+               canvas.drawPath(bcpath,zxbPaint);
+          }
         //划圆点
         for (int i=0;i<sizeCount;i++){
-            float  ry = yOri - yOri * (1 - 0.1f) * value.get(xValue.get(i)) / yValue.get(yValue.size() - 1);
+            float  ry = yOri - yOri  * value.get(xValue.get(i)) / yValue;
             float   rx = linearStartX + (mSize) * i;
-            canvas.drawCircle(rx,ry,dpToPx(3),dotPain);
-            if (i == selectIndex - 1) {
-                canvas.drawCircle(rx,ry,dpToPx(4),dotPain);
-                canvas.drawCircle(rx, ry, dpToPx(10), mChartPaint);
-                String text = value.get(xValue.get(i))+"";
-                drawFloatTextBox(canvas, rx, ry - dpToPx(7), text,i);
+            if (i+1<=posMonth) {
+                if (posMonth==0 && value.get(xValue.get(i))<=0)
+                    break;
+                canvas.drawCircle(rx, ry, dpToPx(3), dotPain);
+                if (i == selectIndex - 1) {
+                    canvas.drawCircle(rx, ry, dpToPx(4), dotPain);
+                    canvas.drawCircle(rx, ry, dpToPx(10), mChartPaint);
+                    String text = value.get(xValue.get(i)) + "";
+                    drawFloatTextBox(canvas, rx, ry - dpToPx(7), text, i);
+                }
             }
         }
     }
@@ -421,7 +466,6 @@ public class BarGraphView extends View{
         mPaint.setTextAlign(Paint.Align.CENTER);
         mPaint.setColor(textColor);//要写在draw里面不然画不出来
         mPaint.getTextBounds(text,0,text.length(),mBound);
-//        canvas.drawText(text,x , y+ mBound.height()+10,mPaint);
         if (pos==value.size()-1){
             canvas.drawText(text, x-mSize/3, y  - mBound.height()/3*2-dp7, mPaint);
         }else if (pos==0){
@@ -448,17 +492,21 @@ public class BarGraphView extends View{
      * @param event
      */
     private void clickAction(MotionEvent event) {
+        if (value==null||xValue==null||value.size()==0||xValue.size()==0)
+            return;
         int dp8 = dpToPx(18);
         float eventX = event.getX();
         float eventY = event.getY();
         for (int i = 0; i < xValue.size(); i++) {
             //节点
             float x = linearStartX + mSize * i;
-            float y = yOri - yOri * (1 - 0.1f) * value.get(xValue.get(i)) / yValue.get(yValue.size() - 1);
+            float y = yOri - yOri * value.get(xValue.get(i)) / yValue;
             if (eventX >= x - dp8 && eventX <= x + dp8 &&
                     eventY >= y - dp8 && eventY <= y + dp8 && selectIndex != i + 1) {//每个节点周围8dp都是可点击区域
-                selectIndex = i + 1;
-                invalidate();
+                if (i+1<=posMonth) {
+                    selectIndex = i + 1;
+                    invalidate();
+                }
                 return;
             }
         }
@@ -563,33 +611,45 @@ public class BarGraphView extends View{
 
     }
 
-    private List<Integer> getShowMonth(){
-        if (value==null )
-            return null;
-
-        List<Integer>monthList = new ArrayList<>();
-        //本月七月返回的是六月
-        Calendar calendar = Calendar.getInstance();
-//        int month = calendar.get(Calendar.MONTH);
-        int month = 1;
-        for (int i=value.size();i>0;i--){
-            if (i<=month){
-                if (monthList.size()<6){
-                    monthList.add(i);
-                }
-
-            }
-
-        }
-        Log.e("234","monthList==="+monthList.toString());
-    return monthList;
-    }
-
-    public void setValue(Map<String, Integer> value, List<String> xValue, List<Integer> yValue) {
+    /**
+     * 设置初始值
+     * @param value
+     * @param xValue
+     * @param yValue 纵坐标的最大值
+     */
+    public void setValue(Map<String, Integer> value, List<String> xValue,int yValue) {
         this.value = value;
         this.xValue = xValue;
         this.yValue = yValue;
-        getShowMonth();
         invalidate();
+    }
+
+    /**
+     * 设置当前月份
+     * @param posMonth
+     */
+    public void setCurrentMonth(int posMonth){
+        this.posMonth = posMonth;
+        selectIndex = posMonth;
+        getDisPlace(posMonth);
+        invalidate();
+
+    }
+    /**
+     * 设置一开始位移
+     * @param posPlace
+     */
+    public void setCurrentDisplace(int posPlace){
+        this.posPlace = posPlace;
+        isRectFirst = true;
+        isMonthFirst = true;
+    }
+    private void getDisPlace(int posMonth){
+        if (posMonth<=6){
+            setCurrentDisplace(0);
+        }else {
+            setCurrentDisplace(posMonth-6);
+        }
+
     }
 }

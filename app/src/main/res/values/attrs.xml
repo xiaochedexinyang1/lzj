@@ -20,6 +20,23 @@
         <attr name="roundTextSize" format="dimension"/>
     </declare-styleable>
 
+    <declare-styleable name="MonthView">
+        <attr name="backgroundColor" format="color"/>
+        <attr name="rectfColor" format="color"/>
+        <attr name="rectfChoseColor" format="color"/>
+        <attr name="monthtextSize" format="dimension"/>
+        <attr name="monthtextColor" format="color"/>
+        <attr name="tktextSize" format="dimension"/>
+        <attr name="tktextColor" format="color"/>
+    </declare-styleable>
+
+
+
+
+
+
+
+
 
     <!-- xy坐标轴颜色 -->
     <attr name="xylinecolor" format="color" />

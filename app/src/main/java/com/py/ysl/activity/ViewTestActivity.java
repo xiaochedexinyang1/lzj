@@ -9,6 +9,7 @@ import com.py.ysl.base.BaseActivity;
 import com.py.ysl.bean.RoundInfo;
 import com.py.ysl.view.myview.BarGraphView;
 import com.py.ysl.view.myview.ChartView;
+import com.py.ysl.view.myview.MonthView;
 import com.py.ysl.view.myview.RoundView;
 
 import java.util.ArrayList;
@@ -32,6 +33,8 @@ public class ViewTestActivity extends BaseActivity{
     TextView text1;
     @BindView(R.id.chartview)
     ChartView chartview;
+    @BindView(R.id.month)
+    MonthView month;
 
 
     private List<String>list;
@@ -110,25 +113,30 @@ public class ViewTestActivity extends BaseActivity{
         for (int i = 0; i < 12; i++) {
             StrList.add((i + 1) + "月");
         }
-        value.put( "1月", 200);//60--240
-        value.put( "2月", 250);//60--240
-        value.put( "3月", 180);//60--240
-        value.put( "4月", 190);//60--240
-        value.put( "5月", 204);//60--240
-        value.put( "6月", 190);//60--240
-        value.put( "7月", 200);//60--240
-        value.put( "8月", 230);//60--240
-        value.put( "9月", 210);//60--240
-        value.put( "10月", 240);//60--240
-        value.put( "11月", 260);//60--240
-        value.put( "12月", 200);//60--240 value.put( "1月", 200);//60--240
+        value.put( "1月", 600);//60--240
+        value.put( "2月", 500);//60--240
+        value.put( "3月", 800);//60--240
+        value.put( "4月", 900);//60--240
+        value.put( "5月", 400);//60--240
+        value.put( "6月", 900);//60--240
+        value.put( "7月", 1100);//60--240
+        value.put( "8月", 1300);//60--240
+        value.put( "9月", 1800);//60--240
+        value.put( "10月", 1400);//60--240
+        value.put( "11月", 1600);//60--240
+        value.put( "12月", 1000);//60--240 value.put( "1月", 200);//60--240
 
-        for (int i = 0; i < 6; i++) {
-            intList.add(i * 60);
-        }
         chartview.setValue(value,StrList,intList);
-        bar_view.setValue(value,StrList,intList);
+        bar_view.setValue(value,StrList,1800*3/2);
+        bar_view.setCurrentMonth(9);//当没有满一年的时候需要用到
+        List<String>monList = new ArrayList<>();
+        for (int i=0;i<31;i++){
+            int val = (int)(Math.random()*100+1);
+            monList.add(val+"");
+        }
 
+        month.setValue(monList,150,31);
+        month.setCurrentDay(21);
     }
 
     @Override
