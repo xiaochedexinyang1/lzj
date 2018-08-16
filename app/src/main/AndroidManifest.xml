@@ -26,13 +26,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.RxjavaActivity"/>
-        <activity android:name=".base.BaseActivity"/>
+        <activity android:name=".activity.RxjavaActivity" />
+        <activity android:name=".base.BaseActivity" />
         <activity android:name=".base.BaseFragmentActivity" />
-        <activity android:name=".activity.Main2Activity">
-        </activity>
-        <activity android:name=".activity.ViewTestActivity"/>
-        <activity android:name="com.py.ysl.activity.kt.KtActivity1" />
+        <activity android:name=".activity.Main2Activity"></activity>
+        <activity android:name=".activity.ViewTestActivity" />
+        <activity android:name=".activity.kt.KtActivity1" />
+        <activity android:name=".activity.LayoutActivity"></activity>
     </application>
 
 </manifest>

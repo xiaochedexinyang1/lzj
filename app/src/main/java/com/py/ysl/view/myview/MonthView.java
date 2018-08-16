@@ -22,6 +22,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author lizhijun 2018.8.7
+ *自定义每个月每日的 消费情况
+ */
 public class MonthView extends View {
 
     private Context context;

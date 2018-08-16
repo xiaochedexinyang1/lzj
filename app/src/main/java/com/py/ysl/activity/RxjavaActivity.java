@@ -45,7 +45,8 @@ public class RxjavaActivity extends BaseActivity implements View.OnClickListener
     TextView tvPerssion;
     @BindView(R.id.text3)
     TextView text3;
-
+    @BindView(R.id.text4)
+    TextView text4;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +69,7 @@ public class RxjavaActivity extends BaseActivity implements View.OnClickListener
         tvRxjava.setOnClickListener(this);
         tvPerssion.setOnClickListener(this);
         text3.setOnClickListener(this);
+        text4.setOnClickListener(this);
     }
 
     @Override
@@ -227,6 +229,9 @@ public class RxjavaActivity extends BaseActivity implements View.OnClickListener
             case R.id.text3:
 //                startActivity(new Intent(RxjavaActivity.this, KtActivity1.class));ViewTestActivity
                 startActivity(new Intent(RxjavaActivity.this, ViewTestActivity.class));
+                break;
+            case R.id.text4:
+                startActivity(new Intent(RxjavaActivity.this, LayoutActivity.class));
                 break;
             default:
                 break;

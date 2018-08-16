@@ -2,6 +2,7 @@ package com.py.ysl.activity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.py.ysl.R;
@@ -9,8 +10,10 @@ import com.py.ysl.base.BaseActivity;
 import com.py.ysl.bean.RoundInfo;
 import com.py.ysl.view.myview.BarGraphView;
 import com.py.ysl.view.myview.ChartView;
+import com.py.ysl.view.myview.LineaView;
 import com.py.ysl.view.myview.MonthView;
 import com.py.ysl.view.myview.RoundView;
+import com.py.ysl.view.myview.WaveView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,10 +38,16 @@ public class ViewTestActivity extends BaseActivity{
     ChartView chartview;
     @BindView(R.id.month)
     MonthView month;
-
+    @BindView(R.id.wave_view)
+    WaveView wave_view;
+    @BindView(R.id.progressbar)
+    ProgressBar progressbar;
+    @BindView(R.id.lineavire)
+    LineaView lineavire;
 
     private List<String>list;
     private List<RoundInfo>roundList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,11 +108,11 @@ public class ViewTestActivity extends BaseActivity{
 //        list.add("1500");
 //        list.add("2500");
 
-        roundView.setData(roundList);
+        roundView.setData(roundList,false);
         text1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                roundView.setData(roundList);
+                roundView.setData(roundList,true);
             }
         });
         List<String>StrList = new ArrayList<>();
@@ -128,7 +137,7 @@ public class ViewTestActivity extends BaseActivity{
 
         chartview.setValue(value,StrList,intList);
         bar_view.setValue(value,StrList,1800*3/2);
-        bar_view.setCurrentMonth(9);//当没有满一年的时候需要用到
+        bar_view.setCurrentMonth(11);//当没有满一年的时候需要用到
         List<String>monList = new ArrayList<>();
         for (int i=0;i<31;i++){
             int val = (int)(Math.random()*100+1);
@@ -137,11 +146,29 @@ public class ViewTestActivity extends BaseActivity{
 
         month.setValue(monList,150,31);
         month.setCurrentDay(21);
+        progressbar.setMax(100);
+        progressbar.setProgress(50);
+        lineavire.setVaule("#ffd862",10,8);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
 
+    }
+
+    private String getColor(String category){
+        HashMap<String,String>map = new HashMap<>();
+        map.put("交通","#5F9BFF");
+        map.put("衣服鞋包","#FF78E5");
+        map.put("日常生活","#FFD764");
+        map.put("医疗卫生","#FF2937");
+        map.put("通讯","#3EDFFF");
+        map.put("第三方支付","#FB804F");
+        map.put("还款","#C977FF");
+        map.put("其他","#94BCFF");
+        map.put("","#94BCFF");
+        map.put(null,"#94BCFF");
+        return map.get(category);
     }
 }

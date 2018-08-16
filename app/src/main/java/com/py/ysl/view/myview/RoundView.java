@@ -25,6 +25,7 @@ import java.util.List;
 
 
 /**
+ * @author lizhijun 2018.7.28
  * 自定义饼状图
  */
 public class RoundView extends View{
@@ -51,7 +52,7 @@ public class RoundView extends View{
     private static final float DEFAULT_GRENN_WIDTH= 35;//圆弧的宽度
 
     private ValueAnimator cakeValueAnimator;
-    private float  mAngle = 0.0f;
+    private float  mAngle = 360.0f;
     private Context context;
     public RoundView(Context context){
         this(context,null);
@@ -166,11 +167,9 @@ public class RoundView extends View{
      */
     private void ondraw(Canvas canvas){
         float sweepAngle = 0.0f;
-//        float startAngle =0.0f;
         float startAngleY =0.0f;
         boolean isBreak=false;//退出循环
         for (int i=0;i<list.size();i++){
-//            startAngle += sweepAngle;
             sweepAngle =(float) 3.6*presents.get(i);
             mPaint.setColor(Color.parseColor(list.get(i).getColor()));
             mPaint.setStyle(Paint.Style.STROKE);// 设置中空的样式
@@ -206,7 +205,7 @@ public class RoundView extends View{
      * 元数据
      * @param list
      */
-    public   void setData(List<RoundInfo>list){
+    public   void setData(List<RoundInfo>list,boolean havaAnimat){
         this.list = list;
         int total = 0;
         for (int i=0;i<list.size();i++){
@@ -217,7 +216,9 @@ public class RoundView extends View{
 
             presents.add(cursent);
         }
-        cakeValueAnimator.start();
+        if (havaAnimat) {
+            cakeValueAnimator.start();
+        }
         invalidate();
     }
     public int dip2px(Context context, float dpValue) {
@@ -249,12 +250,7 @@ public class RoundView extends View{
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                  mAngle = (Float)animation.getAnimatedValue("angle");
-//               long now = Calendar.getInstance().getTimeInMillis();
-//                long vi=now-time;
-//
-//               time = now;
-
-               invalidate();
+                 invalidate();
             }
         });
     }

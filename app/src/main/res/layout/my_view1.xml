@@ -30,6 +30,7 @@
         android:id="@+id/month"
         android:layout_width="match_parent"
         android:layout_height="250dp"
+        android:visibility="gone"
         custom:monthtextSize="12sp"
         custom:monthtextColor="#498dff"
         custom:tktextSize="15sp"
@@ -54,6 +55,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="测试"/>
+    <com.py.ysl.view.myview.WaveView
+        android:id="@+id/wave_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        />
+    <ProgressBar
+        android:id="@+id/progressbar"
+        android:layout_width="match_parent"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_height="3dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:visibility="gone"
+        android:progressDrawable="@drawable/myprogress_bg"/>
+    <com.py.ysl.view.myview.LineaView
+        android:id="@+id/lineavire"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        />
 
 
 </LinearLayout>
